@@ -64,4 +64,8 @@ public class Test {
 	public void failedLogin() {				//check if the password is incorrect
 		assertFalse(wallet.Login("aditya","asdfg"));
 	}
+	@org.junit.Test
+	public void invalidUserForLogin() {				//check User doesn't exist is incorrect
+		assertFalse(wallet.Login("adi","asdfg"));
+	}
 }
