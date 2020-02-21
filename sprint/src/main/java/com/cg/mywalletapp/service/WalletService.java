@@ -13,7 +13,7 @@ import com.cg.mywalletapp.beans.Customer;
 
 public class WalletService {
 	private WalletServiceUtility repo;
-	boolean state = false;
+	boolean state = false;					//State=True for logged in False for logged out
 	HashMap<String,Customer> data= new HashMap<String,Customer>();
 	public WalletService(HashMap<String,Customer> data) {
 
@@ -51,7 +51,7 @@ public class WalletService {
 	public boolean Login(String Userid,String password) {
 		
 		if(data.containsKey(Userid)) {
-			if(data.get(Userid).getPassword()==password) {
+			if(data.get(Userid).getPassword().contentEquals(password)) {
 				System.out.println("Logged in");
 				state= true;
 				return state;
