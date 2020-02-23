@@ -27,10 +27,14 @@ public class WalletService {
 		//Regex for validation of 10 digit mobile number
 		Pattern p=Pattern.compile("[0-9]{10}");
 		Matcher m=p.matcher(mob);
+		
+		//Regex for validation of password min 6 max 14 and whitespace is not allowed
+		Pattern pswd_reg=Pattern.compile("[^\\s]*{5,14}");
+		Matcher pswd_m=pswd_reg.matcher(password);
+		System.out.println(pswd_m.matches());
 	
-		if(m.matches()) {
+		if(m.matches() && pswd_m.matches()) {
 			Customer new_customer=null;
-			
 			new_customer=repo.findCustomer(userid);
 				if(new_customer==null) {				//if doesn't exist then create
 				Wallet ob=new Wallet(new BigDecimal(0.00));
@@ -44,8 +48,11 @@ public class WalletService {
 				throw new UserAlreadyRegistered("This userID is already registered");
 			}
 		}
-		else {
+		else if(m.matches()==false) {
 			throw new MyInvalidInputException("please correctly enter 10 digit mobile number");
+		}
+		else {
+			throw new MyInvalidInputException("please correctly enter password without spaces and length of 6-15 characters");
 		}
 	}
 	public boolean Login(String Userid,String password) {
@@ -58,33 +65,19 @@ public class WalletService {
 			}
 			else {
 				System.out.println("incorrect password");
+				state = false;
+				return state;
 			}
 		}else {
 			System.out.println("user not found");//create exception
+			
 		}
 		
 		return false;
 	
 	}
 	
-/*	public Customer showDetails(String mob) {
-		Pattern p=Pattern.compile("[0-9]{10}");
-		Matcher m=p.matcher(mob);
-		if(m.matches())
-		{
-			Customer customer=null;
-			customer = repo.findCustomer(mob);
-			if(customer!=null)
-				return customer;
-		    else
-		        throw new MobileNumberNotRegistered("your user is not registered");
-		}
-		else
-		{
-			throw new MyInvalidInputException("please correctly enter 10 digit mobile number");
-		}
-	}
-	*/
+
 }
 class WalletServiceUtility{
 	Map<String, Customer> data; 

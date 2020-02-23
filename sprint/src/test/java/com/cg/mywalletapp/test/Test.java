@@ -43,6 +43,12 @@ public class Test {
 		
 		wallet.createAccount("abhinav", "1233","abhi","abbb");
 	}
+	@org.junit.Test(expected=MyInvalidInputException.class)
+	public void testCreateAccountInvalidPassword()       //password validation failed
+	{
+		
+		wallet.createAccount("aditya", "1233","aditya","abbb");
+	}
 	@org.junit.Test(expected=UserAlreadyRegistered.class)// mobile number already registerd
 	public void testCreateAccount2() 
 	{
@@ -62,7 +68,7 @@ public class Test {
 	}
 	@org.junit.Test
 	public void failedLogin() {				//check if the password is incorrect
-		assertFalse(wallet.Login("aditya","asdfg"));
+		assertFalse(wallet.Login("aditya","asdfga"));
 	}
 	@org.junit.Test
 	public void invalidUserForLogin() {				//check User doesn't exist is incorrect
