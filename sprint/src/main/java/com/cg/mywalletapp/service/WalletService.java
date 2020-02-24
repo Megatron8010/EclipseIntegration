@@ -12,9 +12,9 @@ import com.cg.mywalletapp.beans.Wallet;
 import com.cg.mywalletapp.beans.Customer;
 
 public class WalletService {
-	private WalletServiceUtility repo;
+	private WalletServiceUtility repo;		//To access Collection HashMap
 	boolean state = false;					//State=True for logged in False for logged out
-	HashMap<String,Customer> data= new HashMap<String,Customer>();
+	HashMap<String,Customer> data= new HashMap<String,Customer>();   
 	public WalletService(HashMap<String,Customer> data) {
 
 		repo= new WalletServiceUtility(data);   //passed to utility functions
@@ -31,8 +31,7 @@ public class WalletService {
 		//Regex for validation of password min 6 max 14 and whitespace is not allowed
 		Pattern pswd_reg=Pattern.compile("[^\\s]*{5,14}");
 		Matcher pswd_m=pswd_reg.matcher(password);
-		System.out.println(pswd_m.matches());
-	
+		
 		if(m.matches() && pswd_m.matches()) {
 			Customer new_customer=null;
 			new_customer=repo.findCustomer(userid);
@@ -64,47 +63,18 @@ public class WalletService {
 				return state;
 			}
 			else {
-				System.out.println("incorrect password");
 				state = false;
-				return state;
+				throw new AuthenticationFailedException("Authetication has failed as password is incorrect");
 			}
 		}else {
-			System.out.println("user not found");//create exception
+			state = false;
+			throw new AuthenticationFailedException("Authetication has failed as the user doesn't exists");//create exception
 			
 		}
 		
-		return false;
+		
 	
 	}
 	
 
-}
-class WalletServiceUtility{
-	Map<String, Customer> data; 
-	public WalletServiceUtility(Map<String, Customer> data) {
-		super();
-		this.data = data;
-	}
-
-	public Customer findCustomer(String userid) 
-	{
-	if (data.containsKey(userid)){		
-		  return (data.get(userid));
-		}
-	else{
-		return null;
-	}
-	
-}
-	public void save(Customer customer) 
-	{
-		if(customer !=null) {
-		
-		data.put(customer.getUserID(), customer);
-		}else {
-			System.out.println("Customer is null!");	//Placeholder text
-		}
-		
-		
-	}
 }
