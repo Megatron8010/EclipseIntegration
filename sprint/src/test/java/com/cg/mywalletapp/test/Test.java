@@ -67,7 +67,7 @@ public class Test {
 		assertTrue(wallet.Login("aditya","asdfgh"));
 	}
 	@org.junit.Test(expected=AuthenticationFailedException.class)
-	public void failedLogin() {				//check if the password is incorrect
+	public void failedLogin() {				//check if the password is incorrect and authentication is failed
 		wallet.Login("aditya","asdfga");
 	}
 	@org.junit.Test(expected=AuthenticationFailedException.class)
