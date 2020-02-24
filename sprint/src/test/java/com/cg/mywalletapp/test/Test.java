@@ -57,7 +57,7 @@ public class Test {
 	}
 	
 	@org.junit.Test
-	public void testCreateAccount3() 
+	public void testCreateAccount3()    //succesful creation
 	{
 		
 		assertEquals(new Customer("Ramesh","1234567891",new Wallet(new BigDecimal(0.00)),"Ramesh","zcxzcx"), wallet.createAccount("Ramesh", "1234567891","Ramesh","zcxzcx"));
@@ -66,12 +66,12 @@ public class Test {
 	public void testLogin() {				//check if the password is correct
 		assertTrue(wallet.Login("aditya","asdfgh"));
 	}
-	@org.junit.Test
+	@org.junit.Test(expected=AuthenticationFailedException.class)
 	public void failedLogin() {				//check if the password is incorrect
-		assertFalse(wallet.Login("aditya","asdfga"));
+		wallet.Login("aditya","asdfga");
 	}
-	@org.junit.Test
+	@org.junit.Test(expected=AuthenticationFailedException.class)
 	public void invalidUserForLogin() {				//check User doesn't exist is incorrect
-		assertFalse(wallet.Login("adi","asdfg"));
+		wallet.Login("adi","asdfg");
 	}
 }
