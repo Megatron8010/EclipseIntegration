@@ -71,10 +71,20 @@ public class WalletService {
 			throw new AuthenticationFailedException("Authetication has failed as the user doesn't exists");//create exception
 			
 		}
-		
-		
+	
 	
 	}
-	
+	public String forgotPassword(String name, String mob, String userid) {
+		Customer my_customer = repo.findCustomer(userid);
+		if(userid.equals(my_customer.getUserID())   && name.equals(my_customer.getName()) && mob.equals(my_customer.getMobileNo()))
+			return my_customer.getPassword();
+		else {
+
+			return "Your Details do not match please enter correct details to obtain your password";
+		}
+		 
+		
+	}
+		
 
 }
